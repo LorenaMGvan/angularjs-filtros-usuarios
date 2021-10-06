@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="agendaApp">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>filtros de usuario AngularJS</title>  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.8.2/angular-animate.min.js"></script>
+  <script src="https://code.angularjs.org/1.8.2/angular-resource.min.js"></script>
+  <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script>
+  <script src="app.js"></script>
+  <script src="users.service.js"></script>    
+  <script src="users.controller.js"></script>
+
+  <style>
+    td {
+      font-size: 14px;
+    }
+    
+  </style>
+</head>
+<body>
+  
+
+  <main ng-controller="usersCtrl">    
+    <br>
+    <h2 class="text-center">Ejemplo de filtros en angularJS</h2>    
+    
+    <div class="text-center mb-5">
+      <input ng-model="searchUser" placeholder="fulanito">
+    </div>
+
+    <div ng-hide="!loading" ng-include="'loading.svg'"></div>
+        
+    <table ng-show="!loading" class="table table-striped w-50 m-auto">
+      <thead>
+        <tr>
+          <th scope="col">            
+            <a href="#" ng-click="itemOrder='id'; orderUser =!orderUser">#id</a>
+          </th>
+          <th scope="col">
+            <a href="#" ng-click="itemOrder='name'; orderUser= !orderUser;">Nombre</a>
+          </th>        
+          <th scope="col">
+            <a href="#" ng-click="itemOrder='apellido'; orderUser= !orderUser">Apellido</a>            
+          </th>        
+          <th scope="col">
+            <a href="#" ng-click="itemOrder='email'; orderUser= !orderUser">Email</a>                        
+          </th> 
+          <th scope="col">
+            <a href="#" ng-click="itemOrder='empresa'; orderUser= !orderUser">Empresa</a> 
+          </th>        
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in usersList | filter:searchUser | orderBy:itemOrder:orderUser ">
+          <td>{{ user.id }}</td>          
+          <td>{{ user.name }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email | lowercase }}</td>
+          <td>{{ user.company.name  | uppercase }}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </main>
+    
+</body>
+</html>
